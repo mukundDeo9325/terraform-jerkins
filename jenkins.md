@@ -1,3 +1,79 @@
+## jenkins 3 tire application with the help of jenkins pipeline 
+```groovy 
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_USER = "YOUR_DOCKERHUB_USERNAME"
+        REPO_NAME      = "YOUR_IMAGE_NAME"
+    }
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/mukundDeo9325/student-app-k8s.git'
+            }
+        }
+
+        stage('Build Frontend Image') {
+            steps {
+                sh "docker build -t ${DOCKERHUB_USER}/${REPO_NAME}:frontend ./frontend"
+            }
+        }
+
+        stage('Build Backend Image') {
+            steps {
+                sh "docker build --no-cache -t ${DOCKERHUB_USER}/${REPO_NAME}:backend ./backend"
+            }
+        }
+
+        stage('Docker Hub Login') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-cred',
+                        usernameVariable: 'USERNAME',
+                        passwordVariable: 'PASSWORD'
+                    )
+                ]) {
+                    sh '''
+                        echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+                    '''
+                }
+            }
+        }
+
+        stage('Push Frontend Image') {
+            steps {
+                sh "docker push ${DOCKERHUB_USER}/${REPO_NAME}:frontend"
+            }
+        }
+
+        stage('Push Backend Image') {
+            steps {
+                sh "docker push ${DOCKERHUB_USER}/${REPO_NAME}:backend"
+            }
+        }
+    }
+
+    post {
+        always {
+            sh "docker logout || true"
+        }
+
+        success {
+            echo "Docker images built and pushed successfully."
+        }
+
+        failure {
+            echo "Pipeline failed."
+        }
+    }
+}
+````
+
 ```groovy
 pipeline {
     agent any
