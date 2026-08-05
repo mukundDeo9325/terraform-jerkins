@@ -1,3 +1,21 @@
+## Installation 
+## Docker 
+```
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo usermod -aG docker jenkins
+sudo usermod -aG docker ubuntu
+newgrp docker
+sudo chmod 777 /var/run/docker.sock
+```
+## Terraform installation 
+- https://developer.hashicorp.com/terraform/install
+
+## AWS Cli Installation 
+```
+sudo snap install aws-cli --classic
+```
+
 ## jenkins 3 tire application with the help of jenkins pipeline 
 ```groovy 
 pipeline {
