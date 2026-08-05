@@ -15,6 +15,7 @@ newgrp docker
 sudo snap install aws-cli --classic
 chmod 777 /var/run/docker.sock
 ```
+# attach iam role if permission denied error occurred 
 
 ## jenkins 3 tire application with the help of jenkins pipeline 
 ```groovy 
