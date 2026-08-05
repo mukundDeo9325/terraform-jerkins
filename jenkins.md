@@ -173,12 +173,12 @@ pipeline {
             }
         }
 
-        stage('Trigger Job2') {
+        stage('Trigger Job3') {
             when {
                 expression { params.action == 'apply' }
             }
             steps {
-                build job: 'job2', wait: true
+                build job: 'job3', wait: true
             }
         }
 
