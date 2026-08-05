@@ -13,7 +13,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/mukundDeo9325/student-app-k8s.git'
+                    url: 'https://github.com/mukundDeo9325/terraform-jerkins.git'
             }
         }
 
@@ -188,7 +188,7 @@ pipeline {
         stage('Code Pull') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/mukundDeo9325/student-app-k8s.git'
+                url: 'https://github.com/mukundDeo9325/terraform-jerkins.git'
             }
         }
 
